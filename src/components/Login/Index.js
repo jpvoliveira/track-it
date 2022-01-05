@@ -1,14 +1,16 @@
 import Container from "./style";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
+import TokenContext from "../../contexts/TokenContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(true);
+  const {setToken} = useContext(TokenContext)
 
   const navigate = useNavigate();
 
@@ -25,10 +27,10 @@ export default function Login() {
     );
     setTimeout(() => {
       promise.then((response) => {
-        console.log(response);
+        setToken(response.data.token)
         navigate("/hoje");
       });
-    }, 1000);
+    }, 3000);
     promise.catch((error) => {
       setLoading(true);
       alert(error.response.data.message);

@@ -4,17 +4,20 @@ import Habits from "./components/Habits/Index";
 import Login from "./components/Login/Index";
 import Register from "./components/Register/Index";
 import Today from "./components/Today/Index";
+import TokenContext from "./contexts/TokenContext";
 
 export default function App() {
   const [token, setToken] = useState("");
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login setToken={setToken} />}></Route>
-        <Route path="/cadastro" element={<Register />}></Route>
-        <Route path="/habitos" element={<Habits />}></Route>
-        <Route path="/hoje" element={<Today token={token} />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <TokenContext.Provider value={{token, setToken}}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login/>}></Route>
+          <Route path="/cadastro" element={<Register />}></Route>
+          <Route path="/habitos" element={<Habits />}></Route>
+          <Route path="/hoje" element={<Today/>}></Route>
+        </Routes>
+      </BrowserRouter>
+    </TokenContext.Provider>
   );
 }
