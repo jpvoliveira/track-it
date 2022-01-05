@@ -26,14 +26,6 @@ const Container = styled.div`
 
   padding-top: 70px;
   padding-bottom: 70px;
-
-  p {
-    font-size: 17.976px;
-    line-height: 22px;
-    text-align: center;
-
-    color: #52b6ff;
-  }
 `;
 const AddHabits = styled.div`
   display: flex;

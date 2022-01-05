@@ -3,16 +3,13 @@ import Header from "../Header/index";
 import styled from "styled-components";
 import { useContext } from "react";
 import TokenContext from "../../contexts/TokenContext";
-import dayjs from "dayjs";
-require('dayjs/locale/pt-br')
 
-export default function Today() {
-  const {token} = useContext(TokenContext)
-  console.log(token)
+export default function Habits() {
+  const { token } = useContext(TokenContext);
   return (
     <Container>
       <Header />
-      <h1>{dayjs().locale('pt-br').format('dddd')}, {dayjs().format('DD/MM')}</h1>     
+      <h1>Histórico</h1>
       <Footer />
     </Container>
   );
@@ -26,10 +23,12 @@ const Container = styled.div`
 
   padding-top: 70px;
   padding-bottom: 70px;
+
   h1 {
+    padding: 28px 15px;
     font-size: 22.976px;
     line-height: 29px;
     color: #126ba5;
-    padding: 28px 15px;
   }
 `;
+  
