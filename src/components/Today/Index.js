@@ -22,7 +22,7 @@ export default function Today() {
     );
     promise.then((response) => setItems(response.data));
     promise.catch((error) => console.log(error.response));
-  }, []);
+  }, [token]);
 
   return (
     <Container>
