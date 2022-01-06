@@ -8,7 +8,9 @@ export default function Item(props) {
         <span>Sequência atual: {props.currentSequence} dias</span>
         <span>Seu recorde: {props.highestSequence} dias</span>
       </div>
-      <Check></Check>
+      <Check>
+        <img src="../assets/Vector.png" alt="" />
+      </Check>
     </Box>
   );
 }
@@ -40,10 +42,17 @@ const Box = styled.div`
 `;
 
 const Check = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 69px;
   height: 69px;
   background: #ebebeb;
   border: 1px solid #e7e7e7;
   box-sizing: border-box;
   border-radius: 5px;
+  img {
+    width: 37px;
+    height: 32px;
+  }
 `;

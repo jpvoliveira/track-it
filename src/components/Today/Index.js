@@ -20,7 +20,15 @@ export default function Today() {
         },
       }
     );
-    promise.then((response) => setItems(response.data));
+    promise.then((response) => setItems([
+      {
+          "id": 3,
+          "name": "Acordar",
+          "done": true,
+          "currentSequence": 1,
+          "highestSequence": 1
+      }
+  ]));
     promise.catch((error) => console.log(error.response));
   }, [token]);
 
@@ -30,7 +38,7 @@ export default function Today() {
       <h1>
         {dayjs().locale("pt-br").format("dddd")}, {dayjs().format("DD/MM")}
       </h1>
-      <p>Nenhum hábito concluído ainda</p>
+      <h2>Nenhum hábito concluído ainda</h2>
       {items.length === 0 ? "" : items.map((item) => <Item {...item} />)}
       <Footer />
     </Container>
@@ -50,7 +58,7 @@ const Container = styled.div`
     color: #126ba5;
     padding: 28px 0px 0px 15px;
   }
-  p {
+  h2 {
     font-size: 17.976px;
     line-height: 22px;
     color: #bababa;
