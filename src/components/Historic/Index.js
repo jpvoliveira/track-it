@@ -6,6 +6,7 @@ import TokenContext from "../../contexts/TokenContext";
 
 export default function Habits() {
   const { token } = useContext(TokenContext);
+  console.log(token)
   return (
     <Container>
       <Header />

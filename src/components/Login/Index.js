@@ -5,12 +5,14 @@ import { useContext, useState } from "react";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 import TokenContext from "../../contexts/TokenContext";
+import UserContext from "../../contexts/UserContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(true);
   const {setToken} = useContext(TokenContext)
+  const {setUser} = useContext(UserContext)
 
   const navigate = useNavigate();
 
@@ -28,6 +30,7 @@ export default function Login() {
     setTimeout(() => {
       promise.then((response) => {
         setToken(response.data.token)
+        setUser(response.data.image)
         navigate("/hoje");
       });
     }, 3000);
