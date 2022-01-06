@@ -6,7 +6,7 @@ export default function Header() {
   const { user } = useContext(UserContext);
   return (
     <Container>
-      <img src={"./assets/Logo.png"} alt="TrackIt" />
+      <img src={"./assets/TrackIt.svg"} alt="TrackIt" />
       <Profile src={user} alt=""></Profile>
     </Container>
   );

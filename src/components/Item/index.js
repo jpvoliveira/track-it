@@ -9,7 +9,7 @@ export default function Item(props) {
         <span>Seu recorde: {props.highestSequence} dias</span>
       </div>
       <Check>
-        <img src="../assets/Vector.png" alt="" />
+        <img src="../assets/Vector.svg" alt="" />
       </Check>
     </Box>
   );

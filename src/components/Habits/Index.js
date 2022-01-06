@@ -23,7 +23,7 @@ export default function Habits() {
     );
     promise.then((response) => setHabits(response.data));
     promise.catch((error) => console.log(error.response));
-  }, [token]);
+  }, [handleHabits]);
 
   return (
     <Container>
@@ -48,12 +48,10 @@ export default function Habits() {
 
 const Container = styled.div`
   background-color: #e5e5e5;
-
   height: 100vh;
   width: 100vw;
-
-  padding-top: 70px;
-  padding-bottom: 70px;
+  overflow: scroll;
+  padding: 70px 0px;
   p {
     font-size: 17.976px;
     line-height: 22px;

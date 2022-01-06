@@ -7,6 +7,15 @@ export default function NewHabits({ setHandleHabits }) {
   const [name, setName] = useState("");
   const [days, setDays] = useState([]);
   const { token } = useContext(TokenContext);
+  const objectDays = [
+    { name: "D", id: "0", isSelected: false},
+    { name: "S", id: "1", isSelected: false},
+    { name: "T", id: "2", isSelected: false},
+    { name: "Q", id: "3", isSelected: false},
+    { name: "Q", id: "4", isSelected: false},
+    { name: "S", id: "5", isSelected: false},
+    { name: "S", id: "6", isSelected: false},
+  ];
 
   function sendHabit(e) {
     e.preventDefault();
@@ -15,22 +24,33 @@ export default function NewHabits({ setHandleHabits }) {
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
       {
         name,
-        days
-      },{
+        days,
+      },
+      {
         headers: {
-            Authorization: `Bearer ${token}`,
-          }
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     promise.then((response) => {
-      console.log(response.data)
-      setHandleHabits(true)
+      console.log(response.data);
+      setHandleHabits(true);
     });
     promise.catch((error) => {
       console.log(error.response);
     });
   }
+  const [selected, setSelected] = useState(false);
 
+  function selectDay(props) {
+    setDays([...days, props.id]);
+    if (selected === true) {
+      setSelected(false)
+    } else {
+      setSelected(true)
+    }
+  }
+  console.log(objectDays)
   return (
     <Container>
       <form onSubmit={sendHabit}>
@@ -42,13 +62,10 @@ export default function NewHabits({ setHandleHabits }) {
           required
         />
         <Days>
-          <div onClick={() => setDays([...days, 0])}>D</div>
-          <div onClick={() => setDays([...days, 1])}>S</div>
-          <div onClick={() => setDays([...days, 2])}>T</div>
-          <div onClick={() => setDays([...days, 3])}>Q</div>
-          <div onClick={() => setDays([...days, 4])}>Q</div>
-          <div onClick={() => setDays([...days, 5])}>S</div>
-          <div onClick={() => setDays([...days, 6])}>S</div>
+          {objectDays.map((item)=>(
+          <Day selected={selected} onClick={()=>selectDay(item)}>
+            {item.name}
+          </Day>))}
         </Days>
         <Buttons>
           <button
@@ -98,7 +115,7 @@ const Days = styled.div`
   margin-bottom: 29px;
   display: flex;
   gap: 4px;
-  div {
+  /* div {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,6 +126,9 @@ const Days = styled.div`
     box-sizing: border-box;
     border-radius: 5px;
   }
+  div.selec{
+    background-color: red;
+  } */
 `;
 
 const Buttons = styled.div`
@@ -132,4 +152,17 @@ const Buttons = styled.div`
     color: #ffffff;
     font-size: 16px;
   }
+`;
+
+const Day = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: ${(props) => (props.selected ? "#cfcfcf" : "#ffffff")};
+  color: ${(props) => (props.selected ? "#ffffff" : "#cfcfcf")};
+  border: 1px solid #d5d5d5;
+  box-sizing: border-box;
+  border-radius: 5px;
 `;

@@ -41,7 +41,7 @@ export default function Register() {
 
   return (
     <Container>
-      <img src="./assets/LogoImage.png" alt="Logo TrackIt" />
+      <img src="./assets/LogoImage.svg" alt="Logo TrackIt" />
       <form onSubmit={handleSignUp}>
         <input
           type="email"

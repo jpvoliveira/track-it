@@ -46,9 +46,10 @@ const Days = styled.div`
     justify-content: center;
     width: 30px;
     height: 30px;
-    background: #ffffff;
+    background: "#ffffff";
     border: 1px solid #d5d5d5;
     box-sizing: border-box;
     border-radius: 5px;
+    color: #cfcfcf;
   }
 `;

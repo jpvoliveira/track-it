@@ -42,7 +42,7 @@ export default function Login() {
 
   return (
     <Container>
-      <img src="./assets/LogoImage.png" alt="" />
+      <img src="./assets/LogoImage.svg" alt="" />
       <form onSubmit={handleLogin}>
         <input
           type="email"
@@ -73,7 +73,6 @@ export default function Login() {
         color="#FFFFFF"
         height={50}
         width={50}
-        timeout={3000}
       />
     );
   }

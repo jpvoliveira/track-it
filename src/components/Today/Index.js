@@ -39,10 +39,9 @@ export default function Today() {
 
 const Container = styled.div`
   background-color: #e5e5e5;
-
   height: 100vh;
   width: 100vw;
-
+  overflow: scroll;
   padding: 70px 0px;
   h1 {
     font-size: 22.976px;
