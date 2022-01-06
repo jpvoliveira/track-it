@@ -11,6 +11,7 @@ export default function Habits() {
     <Container>
       <Header />
       <h1>Histórico</h1>
+      <h2>Em breve você poderá ver o histórico dos seus hábitos aqui!</h2>
       <Footer />
     </Container>
   );
@@ -30,6 +31,12 @@ const Container = styled.div`
     font-size: 22.976px;
     line-height: 29px;
     color: #126ba5;
+  }
+  h2 {
+    font-size: 17.976px;
+    line-height: 22px;
+    color: #666666;
+    padding: 0px 15px;
   }
 `;
   

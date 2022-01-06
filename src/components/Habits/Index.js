@@ -1,19 +1,46 @@
+import axios from "axios";
 import Footer from "../Footer/Index";
 import Header from "../Header/index";
+import CreatedHabits from "../CreatedHabits/Index";
+import NewHabits from "../NewHabits/Index";
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import TokenContext from "../../contexts/TokenContext";
 
 export default function Habits() {
   const { token } = useContext(TokenContext);
-  console.log(token)
+  const [habits, setHabits] = useState([]);
+  const [handleHabits, setHandleHabits] = useState(true)
+
+  useEffect(() => {
+    const promise = axios.get(
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }
+    );
+    promise.then((response) => setHabits(response.data));
+    promise.catch((error) => console.log(error.response));
+  }, [token]);
+
   return (
     <Container>
       <Header />
       <AddHabits>
         <h1>Meus hábitos</h1>
-        <button>+</button>
+        <button onClick={()=>setHandleHabits(false)}>+</button>
       </AddHabits>
+      {handleHabits ? "" : <NewHabits setHandleHabits={setHandleHabits}/>}
+      {habits.length === 0 ? (
+        <p>
+          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
+          começar a trackear!
+        </p>
+      ) : (
+        habits.map((habit) => <CreatedHabits {...habit}/>)
+      )}
       <Footer />
     </Container>
   );
@@ -27,6 +54,12 @@ const Container = styled.div`
 
   padding-top: 70px;
   padding-bottom: 70px;
+  p {
+    font-size: 17.976px;
+    line-height: 22px;
+    color: #666666;
+    padding: 0px 15px;
+  }
 `;
 const AddHabits = styled.div`
   display: flex;
@@ -39,14 +72,15 @@ const AddHabits = styled.div`
     color: #126ba5;
   }
   button {
+    display: flex;
+    align-items: end;
+    justify-content: center;
     border: none;
     width: 40px;
     height: 35px;
     background: #52b6ff;
     border-radius: 4.63636px;
-    font-size: 26.976px;
-    line-height: 34px;
-    color: #FFFFFF;
-    text-align: center;
+    font-size: 27px;
+    color: #ffffff;
   }
 `;
