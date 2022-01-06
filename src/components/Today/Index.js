@@ -20,15 +20,7 @@ export default function Today() {
         },
       }
     );
-    promise.then((response) => setItems([
-      {
-          "id": 3,
-          "name": "Acordar",
-          "done": true,
-          "currentSequence": 1,
-          "highestSequence": 1
-      }
-  ]));
+    promise.then((response) => setItems(response.data));
     promise.catch((error) => console.log(error.response));
   }, [token]);
 
