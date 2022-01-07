@@ -19,7 +19,6 @@ export default function NewHabits({ setHandleHabits }) {
 
   function sendHabit(e) {
     e.preventDefault();
-
     const promise = axios.post(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
       {
@@ -159,5 +158,3 @@ const Buttons = styled.div`
     font-size: 16px;
   }
 `;
-
-

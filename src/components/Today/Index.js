@@ -10,7 +10,9 @@ require("dayjs/locale/pt-br");
 
 export default function Today() {
   const [items, setItems] = useState([]);
+  const [update, setUpdate] = useState([]);
   const { token } = useContext(TokenContext);
+
   useEffect(() => {
     const promise = axios.get(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
@@ -22,7 +24,7 @@ export default function Today() {
     );
     promise.then((response) => setItems(response.data));
     promise.catch((error) => console.log(error.response));
-  }, [token]);
+  }, [update, token]);
 
   return (
     <Container>
@@ -31,7 +33,9 @@ export default function Today() {
         {dayjs().locale("pt-br").format("dddd")}, {dayjs().format("DD/MM")}
       </h1>
       <h2>Nenhum hábito concluído ainda</h2>
-      {items.length === 0 ? "" : items.map((item) => <Item key={item.id} {...item} />)}
+      {items.length === 0
+        ? ""
+        : items.map((item) => <Item key={item.id} {...item} setUpdate={setUpdate}/>)}
       <Footer />
     </Container>
   );

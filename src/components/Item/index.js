@@ -1,6 +1,44 @@
+import axios from "axios";
+import TokenContext from "../../contexts/TokenContext";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 
 export default function Item(props) {
+  const[checked, setChecked] = useState([])
+  const { token } = useContext(TokenContext);
+
+  console.log(props)
+
+  function handleCheck(){
+    if(props.done === false){
+    setChecked([...checked, props.id])
+    const promise = axios.post(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${props.id}/check`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    promise.then((response) => props.setUpdate(response));
+    promise.catch((error) => console.log(error.response));
+  }else{
+    setChecked(checked.filter((item) => item !== props.id))
+    const promise = axios.post(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${props.id}/uncheck`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    promise.then((response) => props.setUpdate(response));
+    promise.catch((error) => console.log(error.response));
+  }
+  }
+console.log(checked)
   return (
     <Box>
       <div>
@@ -8,7 +46,7 @@ export default function Item(props) {
         <span>Sequência atual: {props.currentSequence} dias</span>
         <span>Seu recorde: {props.highestSequence} dias</span>
       </div>
-      <Check>
+      <Check id={props.id} done={props.done} check={checked} onClick={handleCheck}>
         <img src="../assets/Vector.svg" alt="" />
       </Check>
     </Box>
@@ -47,7 +85,7 @@ const Check = styled.div`
   justify-content: center;
   width: 69px;
   height: 69px;
-  background: #ebebeb;
+  background-color: ${(props)=> props.check.includes(props.id) || props.done ===true ? "#8FC549" : "#ebebeb" };
   border: 1px solid #e7e7e7;
   box-sizing: border-box;
   border-radius: 5px;

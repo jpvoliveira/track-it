@@ -1,7 +1,11 @@
+import axios from "axios";
+import { useContext } from "react";
 import styled from "styled-components";
+import TokenContext from "../../contexts/TokenContext";
 
 export default function CreatedHabits(props) {
-  const days = props.days
+  const { token } = useContext(TokenContext);
+  const days = props.days;
   const objectDays = [
     { name: "D", id: "0" },
     { name: "S", id: "1" },
@@ -12,19 +16,30 @@ export default function CreatedHabits(props) {
     { name: "S", id: "6" },
   ];
 
+  function deleteHabit() {
+    if (window.confirm("Excluir o habito: " + props.name + "?") === true) {
+      const promise = axios.delete(
+        `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${props.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      promise.then((response) => props.setUpdate(response));
+      promise.catch((error) => console.log(error.response));
+    }
+  }
+
   return (
     <HabitsBox>
       <div className="head">
         <h1>{props.name}</h1>
-        <ion-icon name="trash-outline"></ion-icon>
+        <ion-icon onClick={deleteHabit} name="trash-outline"></ion-icon>
       </div>
       <Days>
         {objectDays.map((item) => (
-          <Day
-            key={item.id}
-            selectedDays={days}
-            id={item.id}
-          >
+          <Day key={item.id} selectedDays={days} id={item.id}>
             {item.name}
           </Day>
         ))}

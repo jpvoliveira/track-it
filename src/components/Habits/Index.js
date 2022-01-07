@@ -10,7 +10,8 @@ import TokenContext from "../../contexts/TokenContext";
 export default function Habits() {
   const { token } = useContext(TokenContext);
   const [habits, setHabits] = useState([]);
-  const [handleHabits, setHandleHabits] = useState(true)
+  const [handleHabits, setHandleHabits] = useState(true);
+  const [update, setUpdate] = useState("");
 
   useEffect(() => {
     const promise = axios.get(
@@ -18,28 +19,30 @@ export default function Habits() {
       {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       }
     );
     promise.then((response) => setHabits(response.data));
     promise.catch((error) => console.log(error.response));
-  }, [handleHabits, token]);
-  
+  }, [handleHabits, token, update]);
+
   return (
     <Container>
       <Header />
       <AddHabits>
         <h1>Meus hábitos</h1>
-        <button onClick={()=>setHandleHabits(false)}>+</button>
+        <button onClick={() => setHandleHabits(false)}>+</button>
       </AddHabits>
-      {handleHabits ? "" : <NewHabits setHandleHabits={setHandleHabits}/>}
+      {handleHabits ? "" : <NewHabits setHandleHabits={setHandleHabits} />}
       {habits.length === 0 ? (
         <p>
           Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
           começar a trackear!
         </p>
       ) : (
-        habits.map((habit) => <CreatedHabits key={habit.id} {...habit}/>)
+        habits.map((habit) => (
+          <CreatedHabits key={habit.id} {...habit} setUpdate={setUpdate} />
+        ))
       )}
       <Footer />
     </Container>
