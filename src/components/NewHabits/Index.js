@@ -32,7 +32,6 @@ export default function NewHabits({ setHandleHabits }) {
       }
     );
     promise.then((response) => {
-      console.log(response.data);
       setHandleHabits(true);
     });
     promise.catch((error) => {

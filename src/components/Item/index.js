@@ -1,6 +1,6 @@
 import axios from "axios";
 import TokenContext from "../../contexts/TokenContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 
 export default function Item(props) {

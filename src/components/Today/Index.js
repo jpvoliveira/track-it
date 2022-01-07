@@ -13,8 +13,8 @@ export default function Today() {
   const [update, setUpdate] = useState([]);
   const { token } = useContext(TokenContext);
   let cont = 0;
-  items.map((item) => (item.done ? (cont = cont + 1) : (cont = cont)));
-  console.log(cont);
+  items.map((item) => (item.done && (cont += 1)));
+
   useEffect(() => {
     const promise = axios.get(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
