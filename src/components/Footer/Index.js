@@ -2,8 +2,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useContext } from "react/cjs/react.development";
+import HabitsCheckContext from "../../contexts/HabitsCheckContext";
 
-export default function Footer(props) {
+export default function Footer() {
+  const {habitsCheck} = useContext(HabitsCheckContext)
   return (
     <Container>
       <Link to="/habitos">
@@ -12,7 +15,7 @@ export default function Footer(props) {
       <Link to="/hoje">
       <CircularButton >
       <CircularProgressbar
-        value={props.porcentagem}
+        value={habitsCheck}
         text={'Hoje'}
         background
         backgroundPadding={6}

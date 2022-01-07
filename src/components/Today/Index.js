@@ -5,6 +5,7 @@ import Item from "../Item/index";
 import styled from "styled-components";
 import { useState, useEffect, useContext } from "react";
 import TokenContext from "../../contexts/TokenContext";
+import HabitsCheckContext from "../../contexts/HabitsCheckContext";
 import dayjs from "dayjs";
 require("dayjs/locale/pt-br");
 
@@ -12,8 +13,8 @@ export default function Today() {
   const [items, setItems] = useState([]);
   const [update, setUpdate] = useState([]);
   const { token } = useContext(TokenContext);
-  let cont = 0;
-  items.map((item) => (item.done && (cont += 1)));
+  const { setHabitsCheck, habitsCheck } = useContext(HabitsCheckContext);
+  const [cont, setCont] = useState(0);
 
   useEffect(() => {
     const promise = axios.get(
@@ -23,12 +24,17 @@ export default function Today() {
           Authorization: `Bearer ${token}`,
         },
       }
-      );
-      promise.then((response) => setItems(response.data));
-      promise.catch((error) => console.log(error.response));
-    }, [update, token]);
-    
-  let porcentagem = Math.round((cont / items.length) * 100)
+    );
+    promise.then((response) => {
+      setItems(response.data);
+      let newCont = 0;
+      response.data.forEach((item) => item.done && (newCont += 1));
+      setCont(newCont);
+      setHabitsCheck((newCont / response.data.length) * 100);
+    });
+    promise.catch((error) => console.log(error.response));
+  }, [update, token]);
+
   return (
     <Container cont={cont}>
       <Header />
@@ -37,7 +43,7 @@ export default function Today() {
       </h1>
       <h2>
         {cont > 0
-          ? porcentagem + "% dos habitos concluidos"
+          ? habitsCheck.toFixed(0) + "% dos habitos concluidos"
           : "Nenhum hábito concluído ainda"}
       </h2>
       {items.length === 0
@@ -45,7 +51,7 @@ export default function Today() {
         : items.map((item) => (
             <Item key={item.id} {...item} setUpdate={setUpdate} />
           ))}
-      <Footer porcentagem={porcentagem}/>
+      <Footer />
     </Container>
   );
 }
@@ -65,7 +71,7 @@ const Container = styled.div`
   h2 {
     font-size: 17.976px;
     line-height: 22px;
-    color: ${(props)=>props.cont>0 ? "#8FC549" : "#bababa"};
+    color: ${(props) => (props.cont > 0 ? "#8FC549" : "#bababa")};
     padding: 0px 0px 28px 15px;
   }
 `;
