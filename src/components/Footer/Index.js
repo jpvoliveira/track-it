@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-export default function Footer() {
+export default function Footer(props) {
   return (
     <Container>
       <Link to="/habitos">
@@ -12,7 +12,7 @@ export default function Footer() {
       <Link to="/hoje">
       <CircularButton >
       <CircularProgressbar
-        value={50}
+        value={props.porcentagem}
         text={'Hoje'}
         background
         backgroundPadding={6}

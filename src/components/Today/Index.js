@@ -12,7 +12,9 @@ export default function Today() {
   const [items, setItems] = useState([]);
   const [update, setUpdate] = useState([]);
   const { token } = useContext(TokenContext);
-
+  let cont = 0;
+  items.map((item) => (item.done ? (cont = cont + 1) : (cont = cont)));
+  console.log(cont);
   useEffect(() => {
     const promise = axios.get(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
@@ -21,22 +23,29 @@ export default function Today() {
           Authorization: `Bearer ${token}`,
         },
       }
-    );
-    promise.then((response) => setItems(response.data));
-    promise.catch((error) => console.log(error.response));
-  }, [update, token]);
-
+      );
+      promise.then((response) => setItems(response.data));
+      promise.catch((error) => console.log(error.response));
+    }, [update, token]);
+    
+  let porcentagem = Math.round((cont / items.length) * 100)
   return (
-    <Container>
+    <Container cont={cont}>
       <Header />
       <h1>
         {dayjs().locale("pt-br").format("dddd")}, {dayjs().format("DD/MM")}
       </h1>
-      <h2>Nenhum hábito concluído ainda</h2>
+      <h2>
+        {cont > 0
+          ? porcentagem + "% dos habitos concluidos"
+          : "Nenhum hábito concluído ainda"}
+      </h2>
       {items.length === 0
         ? ""
-        : items.map((item) => <Item key={item.id} {...item} setUpdate={setUpdate}/>)}
-      <Footer />
+        : items.map((item) => (
+            <Item key={item.id} {...item} setUpdate={setUpdate} />
+          ))}
+      <Footer porcentagem={porcentagem}/>
     </Container>
   );
 }
@@ -56,7 +65,7 @@ const Container = styled.div`
   h2 {
     font-size: 17.976px;
     line-height: 22px;
-    color: #bababa;
+    color: ${(props)=>props.cont>0 ? "#8FC549" : "#bababa"};
     padding: 0px 0px 28px 15px;
   }
 `;
