@@ -1,12 +1,8 @@
 import Footer from "../Footer/Index";
 import Header from "../Header/index";
 import styled from "styled-components";
-import { useContext } from "react";
-import TokenContext from "../../contexts/TokenContext";
 
 export default function Habits() {
-  const { token } = useContext(TokenContext);
-  console.log(token)
   return (
     <Container>
       <Header />

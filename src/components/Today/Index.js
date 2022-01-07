@@ -31,7 +31,7 @@ export default function Today() {
         {dayjs().locale("pt-br").format("dddd")}, {dayjs().format("DD/MM")}
       </h1>
       <h2>Nenhum hábito concluído ainda</h2>
-      {items.length === 0 ? "" : items.map((item) => <Item {...item} />)}
+      {items.length === 0 ? "" : items.map((item) => <Item key={item.id} {...item} />)}
       <Footer />
     </Container>
   );

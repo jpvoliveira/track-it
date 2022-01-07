@@ -1,26 +1,39 @@
 import styled from "styled-components";
 
 export default function CreatedHabits(props) {
-    return (
-      <HabitsBox>
-        <div className="head">
-          <h1>{props.name}</h1>
-          <ion-icon name="trash-outline"></ion-icon>
-        </div>
-        <Days>
-          <div>D</div>
-          <div>S</div>
-          <div>T</div>
-          <div>Q</div>
-          <div>Q</div>
-          <div>S</div>
-          <div>S</div>
-        </Days>
-      </HabitsBox>
-    );
-  }
+  const days = props.days
+  const objectDays = [
+    { name: "D", id: "0" },
+    { name: "S", id: "1" },
+    { name: "T", id: "2" },
+    { name: "Q", id: "3" },
+    { name: "Q", id: "4" },
+    { name: "S", id: "5" },
+    { name: "S", id: "6" },
+  ];
 
-  const HabitsBox = styled.div`
+  return (
+    <HabitsBox>
+      <div className="head">
+        <h1>{props.name}</h1>
+        <ion-icon name="trash-outline"></ion-icon>
+      </div>
+      <Days>
+        {objectDays.map((item) => (
+          <Day
+            key={item.id}
+            selectedDays={days}
+            id={item.id}
+          >
+            {item.name}
+          </Day>
+        ))}
+      </Days>
+    </HabitsBox>
+  );
+}
+
+const HabitsBox = styled.div`
   background-color: #ffffff;
   height: 91px;
   margin: 0px 15px;
@@ -40,16 +53,19 @@ const Days = styled.div`
   margin-top: 8px;
   display: flex;
   gap: 4px;
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    background: "#ffffff";
-    border: 1px solid #d5d5d5;
-    box-sizing: border-box;
-    border-radius: 5px;
-    color: #cfcfcf;
-  }
+`;
+
+const Day = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: ${({ selectedDays, id }) =>
+    selectedDays.includes(parseInt(id)) ? "#cfcfcf" : "#ffffff"};
+  color: ${({ selectedDays, id }) =>
+    selectedDays.includes(parseInt(id)) ? "#ffffff" : "#cfcfcf"};
+  border: 1px solid #d5d5d5;
+  box-sizing: border-box;
+  border-radius: 5px;
 `;

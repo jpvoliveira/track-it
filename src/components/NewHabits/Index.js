@@ -8,13 +8,13 @@ export default function NewHabits({ setHandleHabits }) {
   const [days, setDays] = useState([]);
   const { token } = useContext(TokenContext);
   const objectDays = [
-    { name: "D", id: "0", isSelected: false},
-    { name: "S", id: "1", isSelected: false},
-    { name: "T", id: "2", isSelected: false},
-    { name: "Q", id: "3", isSelected: false},
-    { name: "Q", id: "4", isSelected: false},
-    { name: "S", id: "5", isSelected: false},
-    { name: "S", id: "6", isSelected: false},
+    { name: "D", id: "0" },
+    { name: "S", id: "1" },
+    { name: "T", id: "2" },
+    { name: "Q", id: "3" },
+    { name: "Q", id: "4" },
+    { name: "S", id: "5" },
+    { name: "S", id: "6" },
   ];
 
   function sendHabit(e) {
@@ -40,17 +40,16 @@ export default function NewHabits({ setHandleHabits }) {
       console.log(error.response);
     });
   }
-  const [selected, setSelected] = useState(false);
 
   function selectDay(props) {
-    setDays([...days, props.id]);
-    if (selected === true) {
-      setSelected(false)
-    } else {
-      setSelected(true)
+    if (days.includes(props.id)) {
+      const filterDays = days.filter((item) => item !== props.id);
+      setDays(filterDays);
+      return;
     }
+    setDays([...days, props.id]);
   }
-  console.log(objectDays)
+
   return (
     <Container>
       <form onSubmit={sendHabit}>
@@ -62,10 +61,16 @@ export default function NewHabits({ setHandleHabits }) {
           required
         />
         <Days>
-          {objectDays.map((item)=>(
-          <Day selected={selected} onClick={()=>selectDay(item)}>
-            {item.name}
-          </Day>))}
+          {objectDays.map((item) => (
+            <Day
+              selected={days}
+              key={item.id}
+              id={item.id}
+              onClick={() => selectDay(item)}
+            >
+              {item.name}
+            </Day>
+          ))}
         </Days>
         <Buttons>
           <button
@@ -115,20 +120,21 @@ const Days = styled.div`
   margin-bottom: 29px;
   display: flex;
   gap: 4px;
-  /* div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    background: #ffffff;
-    border: 1px solid #d5d5d5;
-    box-sizing: border-box;
-    border-radius: 5px;
-  }
-  div.selec{
-    background-color: red;
-  } */
+`;
+
+const Day = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: ${({ selected, id }) =>
+    selected.includes(id) ? "#cfcfcf" : "#ffffff"};
+  color: ${({ selected, id }) =>
+    selected.includes(id) ? "#ffffff" : "#cfcfcf"};
+  border: 1px solid #d5d5d5;
+  box-sizing: border-box;
+  border-radius: 5px;
 `;
 
 const Buttons = styled.div`
@@ -154,15 +160,4 @@ const Buttons = styled.div`
   }
 `;
 
-const Day = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  background-color: ${(props) => (props.selected ? "#cfcfcf" : "#ffffff")};
-  color: ${(props) => (props.selected ? "#ffffff" : "#cfcfcf")};
-  border: 1px solid #d5d5d5;
-  box-sizing: border-box;
-  border-radius: 5px;
-`;
+

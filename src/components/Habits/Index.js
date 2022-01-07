@@ -23,8 +23,8 @@ export default function Habits() {
     );
     promise.then((response) => setHabits(response.data));
     promise.catch((error) => console.log(error.response));
-  }, [handleHabits]);
-
+  }, [handleHabits, token]);
+  
   return (
     <Container>
       <Header />
@@ -39,7 +39,7 @@ export default function Habits() {
           começar a trackear!
         </p>
       ) : (
-        habits.map((habit) => <CreatedHabits {...habit}/>)
+        habits.map((habit) => <CreatedHabits key={habit.id} {...habit}/>)
       )}
       <Footer />
     </Container>
